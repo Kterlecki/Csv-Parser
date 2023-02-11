@@ -1,3 +1,4 @@
+using Csv_Parser.CustomException;
 using Csv_Parser.models;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -35,9 +36,10 @@ public class Tests
         var path = "CsvFile.csv";
         var csvDataParser = new CsvParser(path);
 
-        var objectList = csvDataParser.ExtractDataFromFile();
+        var objectList = csvDataParser.ExtractDataFromFiles();
 
         Assert.IsInstanceOf<List<FileData>>(objectList);
+        Assert.NotZero(objectList.Count);
     }
     [Test]
     public void CsvParser_GivenInCorrectPathParameter_ReturnsException()
@@ -45,7 +47,7 @@ public class Tests
         var path = "Incorrect path";
         var csvDataParser = new CsvParser(path);
 
-        Assert.That(() => csvDataParser.ExtractDataFromFile(), Throws.TypeOf<InvalidFileTypeException>());
+        Assert.That(() => csvDataParser.ExtractDataFromFiles(), Throws.TypeOf<InvalidFileTypeException>());
     }
 
 }
