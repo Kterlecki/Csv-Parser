@@ -12,31 +12,43 @@ namespace Csv_Parser
     public class CsvParser
     {
 
-        private string _filePath;
-        private List<FileData> fileDataList = new List<FileData>();
+        private readonly string _filePath;
+        private readonly List<FileData> fileDataList = new List<FileData>();
 
         public CsvParser(string path)
         {
             _filePath = path;
         }
 
-        public static bool IsFileCsv(string file)
+        public bool IsFileCsv(string file)
         {
-            string extention = Path.GetExtension(file);
-            return extention.Equals(".csv", StringComparison.OrdinalIgnoreCase);
+            string extention = Path.GetExtension(_filePath);
+            if (extention.Equals(".csv", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Incorrect file type entered - {0}", extention);
+                return false;
+            }
+
         }
 
         public List<FileData> ExtractDataFromFiles()
         {
+            if (!IsFileCsv(_filePath))
+            {
+                throw new InvalidFileTypeException(_filePath);
+            }
             try
             {
-                IsFileCsv(_filePath);
                 using (TextFieldParser csvParser = new TextFieldParser(_filePath))
                 {
-                    csvParser.SetDelimiters(new string[] {","});
+                    csvParser.SetDelimiters(new string[] { "," });
 
                     csvParser.ReadLine();
-                    while(!csvParser.EndOfData)
+                    while (!csvParser.EndOfData)
                     {
                         string[]? fields = csvParser.ReadFields();
                         if (fields is not null)
@@ -50,22 +62,27 @@ namespace Csv_Parser
                             fileDataList.Add(fileData);
                         }
                     }
-                    foreach (var file in fileDataList)
-                    {
-                        Console.WriteLine(file.Name);
-                        Console.WriteLine(file.Description);
-                        Console.WriteLine(file.Quantity);
-                    }
+
                     return fileDataList;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
-                return null;
+                throw new InvalidFileTypeException("Error occured while parsing the file", ex);
             }
         }
 
-
+        public void PrintList()
+        {
+            foreach (var file in fileDataList)
+            {
+                Console.WriteLine(file.Name);
+                Console.WriteLine(file.Description);
+                Console.WriteLine(file.Quantity);
+            }
+        }
     }
+
+
 }
+

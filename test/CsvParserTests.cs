@@ -2,6 +2,7 @@ using Csv_Parser.CustomException;
 using Csv_Parser.models;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Csv_Parser.tests;
 [TestFixture]
@@ -33,7 +34,7 @@ public class Tests
     [Test]
     public void CsvParser_GivenCorrectPathParameter_ReturnsList()
     {
-        var path = "testCsv.csv";
+        var path = @"..\..\..\..\src\TestFile.csv";
         var csvDataParser = new CsvParser(path);
 
         var objectList = csvDataParser.ExtractDataFromFiles();
@@ -49,5 +50,4 @@ public class Tests
 
         Assert.That(() => csvDataParser.ExtractDataFromFiles(), Throws.TypeOf<InvalidFileTypeException>());
     }
-
 }

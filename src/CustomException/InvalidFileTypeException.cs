@@ -12,5 +12,9 @@ namespace Csv_Parser.CustomException
 
         public InvalidFileTypeException()
             : base(DefaultMessage) { }
+        public InvalidFileTypeException(string fileName)
+            : base($"{DefaultMessage}, File Given : {fileName}") { }
+        public InvalidFileTypeException(string errorMessage ,Exception ex)
+            : base($"{errorMessage} : {ex}") { }
     }
 }
