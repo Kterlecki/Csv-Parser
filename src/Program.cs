@@ -1,2 +1,14 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+using Csv_Parser;
+
+
+
+var path = @".\TestFile.csv";
+
+var csvDataParser = new CsvParser(path);
+
+csvDataParser.ExtractDataFromFiles();
+csvDataParser.PrintList();
+
+
+
