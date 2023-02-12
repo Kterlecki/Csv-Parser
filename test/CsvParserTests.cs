@@ -33,7 +33,7 @@ public class Tests
     [Test]
     public void CsvParser_GivenCorrectPathParameter_ReturnsList()
     {
-        var path = "CsvFile.csv";
+        var path = "testCsv.csv";
         var csvDataParser = new CsvParser(path);
 
         var objectList = csvDataParser.ExtractDataFromFiles();

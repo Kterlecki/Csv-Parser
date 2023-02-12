@@ -1,2 +1,10 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+using Csv_Parser;
+
+
+
+var path = @"D:\Users\terlek\projects\Csv-Parser\src\TestFile.cv";
+
+var csvDataParser = new CsvParser(path);
+csvDataParser.ExtractDataFromFiles();
+

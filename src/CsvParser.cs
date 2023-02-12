@@ -20,10 +20,17 @@ namespace Csv_Parser
             _filePath = path;
         }
 
+        public static bool IsFileCsv(string file)
+        {
+            string extention = Path.GetExtension(file);
+            return extention.Equals(".csv", StringComparison.OrdinalIgnoreCase);
+        }
+
         public List<FileData> ExtractDataFromFiles()
         {
             try
             {
+                IsFileCsv(_filePath);
                 using (TextFieldParser csvParser = new TextFieldParser(_filePath))
                 {
                     csvParser.SetDelimiters(new string[] {","});
@@ -52,10 +59,13 @@ namespace Csv_Parser
                     return fileDataList;
                 }
             }
-            catch 
+            catch(Exception ex)
             {
-                throw new InvalidFileTypeException();
+                Console.Error.WriteLine(ex.Message);
+                return null;
             }
         }
+
+
     }
 }
