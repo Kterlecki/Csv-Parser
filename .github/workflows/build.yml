@@ -66,6 +66,5 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"Kterlecki_Csv-Parser" /o:"kterlecki" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="**/*Test*/**" /d:sonar.cs.opencover.reportsPaths="**/Csv-Parser/test/TestResults/**/coverage.opencover.xml"
           dotnet build
           dotnet test --collect:"XPlat Code Coverage" --settings test/runsettings.xml
+          type "**/Csv-Parser/test/TestResults/**/coverage.opencover.xml"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-          # codeDir="$(find ./test/TestResults/** -type d -maxdepth 1)"
-          # rm -rf "$codeDir"
